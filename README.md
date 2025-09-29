@@ -4,46 +4,42 @@ Analista: Gustavo Idalino Venceslau Cavalheiro
 Contato: +5511962320573
 Email: gustavovences01@gmail.com
 
-# Célula de Código 1: Setup, Dados e Funções
-
-# Instalação das dependências (descomente e execute se necessário)
-# !pip install tabulate
-# !pip install matplotlib seaborn
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from tabulate import tabulate
 
 # --- 1. DADOS DE VALUATION (VALE S.A.) ---
 
 # A. Indicadores-Chave (Valores negociados e alvo)
 dados_valuation = {
-    [cite_start]'Preço Alvo VALE ON': 'R$ 74,37'[cite: 17, 31],
-    [cite_start]'EV/EBITDA Atual (Negociado)': '3,46x'[cite: 23, 129],
-    [cite_start]'EBITDA (Estimado)': 'R$ 1.937.000.000,00'[cite: 13, 27],
-    [cite_start]'Produção Anual de Ferro (toneladas)': '315.000.000,00'[cite: 15, 29],
-    [cite_start]'Cotação do Minério de Ferro por Tonelada': 'R$ 425,00'[cite: 11, 25],
-    [cite_start]'Target Price Longo Prazo (Minério)': 'U$ 85,00 @ R$ 5,00'[cite: 108],
+    [cite_start]'Preço Alvo VALE ON': 'R$ 74,37', # [cite: 33, 47]
+    [cite_start]'EV/EBITDA Atual (Negociado)': '3,46x', # [cite: 39]
+    [cite_start]'EBITDA (Estimado)': 'R$ 1.937.000.000,00', # [cite: 29, 43]
+    [cite_start]'Produção Anual de Ferro (toneladas)': '315.000.000,00', # [cite: 31, 45]
+    [cite_start]'Cotação do Minério de Ferro por Tonelada': 'R$ 425,00', # [cite: 27, 41]
+    [cite_start]'Target Price Longo Prazo (Minério)': 'U$ 85,00 @ R$ 5,00', # [cite: 124]
 }
 
 # B. Tabela de Projeções de Fluxo de Caixa (Valores em R$ Milhares - Projeções de 9 Meses)
 dados_caixa = {
     'Período': ['2022 (9M)', '2023 (9M)', '2024 (9M)', '2025 (9M)', '2026 (9M)'],
     'Lucro Líquido': [86424000, -2199000, -2566000, -1416000, -1516000],
-    'Geração de Caixa Operacional (GCO)': [85112400, 50346600, 104153350, 18205850, 17995850],
+    [cite_start]'Geração de Caixa Operacional (GCO)': [85112400, 50346600, 104153350, 18205850, 17995850], # [cite: 76, 77, 78, 79, 80]
     'Investimentos em Capital Fixo (Capex)': [-36646000, -41556000, -15412000, -18812000, -16792000],
-    'Posição do Caixa Final': [-5637600, -2916400, 148183350, -11256150, -646150]
+    [cite_start]'Posição do Caixa Final': [-5637600, -2916400, 148183350, -11256150, -646150] # [cite: 118, 119, 120, 121, 122]
 }
 df_caixa = pd.DataFrame(dados_caixa)
 
 # --- 2. FUNÇÕES ---
 
 def gerar_grafico_caixa(dataframe):
-    """Gera o gráfico de barras da Geração de Caixa Operacional."""
+    """Gera o gráfico de barras da Geração de Caixa Operacional com formatação profissional."""
     coluna_caixa = 'Geração de Caixa Operacional (GCO)'
     plt.figure(figsize=(12, 6))
     
+    # Gráfico de Barras
     ax = sns.barplot(x='Período', y=coluna_caixa, data=dataframe, palette='magma')
     
     plt.title('3. Geração de Caixa Operacional (GCO) Projetada (R$ Milhões)', fontsize=16, fontweight='bold')
@@ -68,8 +64,12 @@ def gerar_grafico_caixa(dataframe):
     plt.show()
 
 def imprimir_indicadores_e_tabela():
-    """Imprime os KPIs e a Tabela de Projeção."""
-    print("## 1. Indicadores-Chave de Valuation")
+    """Imprime os KPIs, a Tabela de Projeção e a Análise em formato Executivo."""
+    print("=" * 80)
+    print("                    Relatório Executivo: VALE S.A. (Alfa Value)                    ")
+    print("=" * 80)
+    print("Analista: Gustavo Idalino Venceslau Cavalheiro")
+    print("\n## 1. Indicadores-Chave de Valuation")
     print("-" * 40)
     for chave, valor in dados_valuation.items():
         print(f"* **{chave}**: {valor}")
@@ -81,11 +81,35 @@ def imprimir_indicadores_e_tabela():
     # Seleciona colunas essenciais para análise de caixa
     df_exibicao = df_caixa[['Período', 'Geração de Caixa Operacional (GCO)', 'Investimentos em Capital Fixo (Capex)', 'Posição do Caixa Final']]
     print(df_exibicao.to_markdown(index=False, floatfmt=",.0f"))
-    # Célula de Código 2: Execução do Relatório
 
-imprimir_indicadores_e_tabela()
-gerar_grafico_caixa(df_caixa)
+    # --- Análise em Texto ---
+    print("\n" + "=" * 80)
+    print("                        4. Análise e Conclusões                        ")
+    print("=" * 80)
 
+    print("\n### Destaques Macroeconômicos")
+    [cite_start]print("* O setor de mineração representa ~4% do PIB, com faturamento de ~R$340 bilhões, e ~30% das exportações nacionais (U$80B). [cite: 3]")
+    [cite_start]print("* Risco: Sinais de recessão Americana e Chinesa, e impacto do 'imposto do pecado' na extração. [cite: 7, 4]")
+    [cite_start]print("* Oportunidade: A VALE se beneficia de sua alta exposição cambial e da valorização do Dólar em suas receitas. [cite: 124]")
+    [cite_start]print("* Crescimento: O setor cresceu 6% no primeiro semestre de 2023. [cite: 3]")
+
+    print("\n### Análise Fundamentalista (VALE S.A.)")
+    [cite_start]print("* Caixa e Liquidez: A Geração de Caixa Operacional (GCO) tem salto projetado de R$ 50B (2023) para R$ 104B (2024). Mantém Capital de Giro negativo, mas há expectativas de melhoria no fluxo de caixa. [cite: 123]")
+    [cite_start]print("* Despesas: As maiores despesas ainda estão relacionadas aos processos de Brumadinho. [cite: 123]")
+    [cite_start]print("* Estratégia e Crescimento: Movimento estratégico para diminuir exposição à China, focando em acordos com o Oriente Médio, Ásia e Europa. [cite: 127, 128]")
+
+    print("\n### Fatores ESG e Transição Energética")
+    [cite_start]print("* A VALE está investindo em tecnologias para neutralizar emissões de carbono e adota biocombustíveis e máquinas sustentáveis. [cite: 5, 126]")
+    [cite_start]print("* Esta transição contribui para a recuperação do EBITDA. [cite: 125]")
+    print("=" * 80)
+
+
+# --- 3. EXECUÇÃO PRINCIPAL ---
+
+if __name__ == "__main__":
+    imprimir_indicadores_e_tabela()
+    gerar_grafico_caixa(df_caixa)
+    
 ## Análise e Conclusões
 
 ### 1. Destaques Macroeconômicos
