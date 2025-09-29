@@ -1,3 +1,5 @@
+# Célula 1: Instalação das dependências!
+pip install tabulate
 import pandas as pd
 import numpy as np
 
