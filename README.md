@@ -1,74 +1,108 @@
-# Célula 1: Instalação das dependências!
-pip install tabulate
+# Análise de Valuation e Macro: VALE S.A.
+### Relatório Executivo - Alfa Value
+Analista: Gustavo Idalino Venceslau Cavalheiro
+Contato: +5511962320573
+Email: gustavovences01@gmail.com
+
+[cite_start]**Tese Principal:** A VALE apresenta indicadores de *valuation* que refletem um fluxo de caixa em recuperação[cite: 129]. A diversificação estratégica de mercado e o foco em ESG mitigam riscos macroeconômicos e de dependência da China.
+# Célula de Código 1: Setup, Dados e Funções
+
+# Instalação das dependências (remova o '#' para executar no seu Colab)
+# !pip install tabulate
+# !pip install matplotlib seaborn
+
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# --- 1. DADOS DE VALUATION DA VALE S.A. (Extraídos do PPTX) ---
+# --- 1. DADOS DE VALUATION DA VALE S.A. (Extraídos do PPTX e PDF) ---
 
-# Tabela de Projeções de Fluxo de Caixa (Valores em R$ Milhares)
-# Nota: Os valores negativos no Lucro Líquido e Variação NCG foram mantidos conforme o documento.
+# A. Indicadores-Chave
+dados_valuation = {
+    [cite_start]'Preço Alvo VALE ON': 'R$ 74,37', # [cite: 17, 31]
+    [cite_start]'EV/EBITDA Atual (Negociado)': '3,46x', # [cite: 23, 129]
+    [cite_start]'EBITDA (Estimado)': 'R$ 1.937.000.000,00', # [cite: 13, 27]
+    [cite_start]'Produção Anual de Ferro (toneladas)': '315.000.000,00', # [cite: 15, 29]
+    [cite_start]'Cotação do Minério de Ferro por Tonelada': 'R$ 425,00', # [cite: 11, 25]
+    [cite_start]'Target Price Longo Prazo (Minério)': 'U$ 85,00 @ R$ 5,00', # [cite: 108]
+}
+
+# B. Tabela de Projeções de Fluxo de Caixa (Valores em R$ Milhares - Projeções de 9 Meses)
 dados_caixa = {
-    'Período': ['01/01/2022 a 30/09/2022', '01/01/2023 a 30/09/2023', '01/01/2024 a 30/09/2024', '01/01/2025 a 30/09/2025', '01/01/2026 a 30/09/2026'],
+    'Período': ['2022 (9M)', '2023 (9M)', '2024 (9M)', '2025 (9M)', '2026 (9M)'],
     'Lucro Líquido': [86424000, -2199000, -2566000, -1416000, -1516000],
-    'Depreciação e Amortização': [11652000, 11072000, 95004000, 10004000, 10004000],
-    'Variação NCG': [4446000, -2199000, -2566000, -1416000, -1516000],
-    'Geração de Caixa Operacional': [85112400, 50346600, 104153350, 18205850, 17995850],
-    'Investimentos em Capital Fixo': [-36646000, -41556000, -15412000, -18812000, -16792000],
-    'Geração de Caixa de Financiamento': [-113499000, -38638000, -85499000, -72499000, -66699000],
+    'Geração de Caixa Operacional (GCO)': [85112400, 50346600, 104153350, 18205850, 17995850],
+    'Investimentos em Capital Fixo (Capex)': [-36646000, -41556000, -15412000, -18812000, -16792000],
     'Posição do Caixa Final': [-5637600, -2916400, 148183350, -11256150, -646150]
 }
-
 df_caixa = pd.DataFrame(dados_caixa)
 
-# Outros Dados de Valuation (Extraídos do PPTX)
-dados_valuation = {
-    [cite_start]'Preço Alvo VALE ON': 'R$ 74,37', # [cite: 33, 46]
-    [cite_start]'EV/EBITDA Atual (Negociado)': '3,46x', # [cite: 39]
-    [cite_start]'EBITDA (Estimado)': 'R$ 1.937.000.000,00', # [cite: 43]
-    [cite_start]'Produção de Ferro (toneladas)': '315.000.000,00', # [cite: 45]
-    [cite_start]'Cotação do Ferro por Tonelada': 'R$ 425,00', # [cite: 41]
-}
+# --- 2. Função para Gerar o Gráfico ---
 
-# --- 2. Função de Impressão do Relatório ---
-
-def imprimir_relatorio():
-    print("=" * 70)
-    print("      RELATÓRIO MACROECONÔMICO E VALUATION: VALE S.A. (Alfa Value)      ")
-    print("=" * 70)
-
-    # Destaques do Setor de Mineração (Macro)
-    print("\n## 1. Destaques Macroeconômicos do Setor de Mineração")
-    print("-" * 50)
-    [cite_start]print(f"  * Representatividade no PIB: Próximo de 4% [cite: 3]")
-    [cite_start]print(f"  * Faturamento Anual Estimado: R$ 340 bilhões [cite: 3]")
-    [cite_start]print(f"  * Crescimento (1º Sem. 2023): 6% [cite: 3]")
-    [cite_start]print(f"  * Exportações Nacionais: 30% (U$ 80 bilhões no total) [cite: 3]")
-    [cite_start]print(f"  * Risco Macroeconômico: Sinais de recessão Americana/Chinesa e o impacto do 'imposto do pecado' na extração de recursos[cite: 4, 7].")
-    [cite_start]print(f"  * ESG/Sustentabilidade: VALE e outras empresas (Gerdau, Votorantim) adotando a Economia Verde e Créditos de Carbono[cite: 5, 9].")
-
-    # Destaques do Valuation da VALE S.A.
-    print("\n## 2. Indicadores de Valuation da VALE S.A.")
-    print("-" * 50)
-    for chave, valor in dados_valuation.items():
-        print(f"  * {chave}: {valor}")
-
-    # Tabela de Projeção (Central)
-    print("\n### Tabela de Projeção de Fluxo de Caixa (Valores em R$ Milhares)")
-    print("  * Nota: Valores apresentados como extraídos. NCG = Necessidade de Capital de Giro.")
+def gerar_grafico_caixa(dataframe):
+    """Gera o gráfico de barras da Geração de Caixa Operacional com formatação profissional."""
+    coluna_caixa = 'Geração de Caixa Operacional (GCO)'
     
-    # Exibir a Tabela de Projeção usando o Pandas (to_markdown é ideal para visualização limpa)
-    # A formatação 'floatfmt' ajuda a exibir números grandes sem notação científica
-    print(df_caixa.to_markdown(index=False, floatfmt=",.0f"))
+    plt.figure(figsize=(12, 6))
+    
+    ax = sns.barplot(
+        x='Período', 
+        y=coluna_caixa, 
+        data=dataframe, 
+        palette='magma'
+    )
+    
+    plt.title('3. Geração de Caixa Operacional (GCO) Projetada (R$ Milhões)', fontsize=16, fontweight='bold')
+    plt.xlabel('Período (Projeção 9 Meses)', fontsize=12)
+    plt.ylabel('GCO', fontsize=12)
 
-    # Destaques Estratégicos e Financeiros
-    print("\n## 3. Estratégia e Observações Finais")
-    print("-" * 50)
-    [cite_start]print("  * **Estratégia**: Diminuir exposição à China, focando em acordos com Oriente Médio, Ásia e Europa[cite: 127].")
-    [cite_start]print("  * **Financeiro**: Maiores despesas relacionadas a Brumadinho[cite: 123]. [cite_start]Há expectativa de melhoras no fluxo de caixa, apesar do Capital de Giro negativo[cite: 123].")
-    [cite_start]print("  * **Transição Energética**: O EBITDA se recupera devido a investimentos em infraestrutura e adoção de biocombustíveis e máquinas sustentáveis[cite: 125, 126].")
-    [cite_start]print("  * **Minério de Ferro**: O alvo de longo prazo para a cotação é U$ 85,00 (câmbio R$ 5,00)[cite: 124].")
-    print("-" * 70)
+    # Conversão e Formatação para R$ Milhões no Eixo Y
+    y_ticks = ax.get_yticks()
+    ax.set_yticklabels([f'R$ {y/1000000:.0f}M' for y in y_ticks])
+    
+    # Adicionar os valores exatos (em R$ Milhões) nas barras
+    for p in ax.patches:
+        ax.annotate(f'R$ {p.get_height()/1000000:.1f}M', 
+                    (p.get_x() + p.get_width() / 2., p.get_height()), 
+                    ha='center', va='center', 
+                    xytext=(0, 10), 
+                    textcoords='offset points',
+                    fontsize=10,
+                    fontweight='bold')
+    
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.show()
+    
+    # Célula de Código 2: Execução do Relatório
 
+imprimir_indicadores_e_tabela()
+gerar_grafico_caixa(df_caixa)
 
-if __name__ == "__main__":
-    imprimir_relatorio()
+# Célula 3: Exibição de KPIs e Tabela de Projeções
+
+print("## Indicadores-Chave de Valuation")
+print("-" * 40)
+for chave, valor in dados_valuation.items():
+    print(f"* **{chave}**: {valor}")
+print("-" * 40)
+
+print("\n## Tabela de Projeção de Fluxo de Caixa (Valores em R$ Milhares)")
+# Mostra apenas as colunas essenciais para uma análise rápida de caixa
+df_exibicao = df_caixa[['Período', 'Geração de Caixa Operacional (GCO)', 'Investimentos em Capital Fixo (Capex)', 'Posição do Caixa Final']]
+print(df_exibicao.to_markdown(index=False, floatfmt=",.0f"))
+****
+## 4. Análise e Conclusões
+
+### Destaques Macroeconômicos
+* [cite_start]O setor de mineração representa **~4% do PIB** [cite: 118] [cite_start]e **~30% das exportações nacionais** (U$80B)[cite: 118].
+* [cite_start]**Riscos & Oportunidades:** Há riscos de recessão nos EUA e na China [cite: 122][cite_start], além do impacto do "imposto do pecado" na extração[cite: 119]. [cite_start]A VALE se beneficia de sua alta exposição cambial com a valorização do Dólar em suas receitas[cite: 108].
+* [cite_start]**Sustentabilidade:** A VALE está investindo fortemente em tecnologias para neutralizar emissões de carbono e adota biocombustíveis e máquinas sustentáveis[cite: 120, 110].
+
+### Análise Fundamentalista (VALE S.A.)
+* [cite_start]**Caixa e Liquidez:** A Geração de Caixa Operacional (GCO) mostra recuperação, e há expectativas de melhoria no fluxo de caixa apesar do Capital de Giro negativo[cite: 107].
+* [cite_start]**Estratégia e Crescimento:** A empresa busca **diminuir exposição à China** [cite: 111][cite_start], focando em acordos com o Oriente Médio, Ásia e Europa[cite: 111, 112].
+* [cite_start]**Minério de Ferro:** O preço do minério de ferro mostra-se resiliente [cite: 127][cite_start], com alvo de longo prazo em **U$ 85,00**[cite: 108].
+
+### Recomendação
+[cite_start]O preço alvo de **R$ 74,37** [cite: 17, 31] é suportado pela resiliência do minério de ferro e pela estratégia de diversificação de clientes. A recuperação do fluxo de caixa e o foco em mercados desenvolvidos justificam uma visão **positiva** de longo prazo.
