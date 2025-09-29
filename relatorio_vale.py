@@ -70,3 +70,8 @@ def imprimir_destaques():
 
 if __name__ == "__main__":
     imprimir_destaques()
+
+# requirements.txt
+pandas
+numpy
+tabulate # O pandas usa o tabulate para o método to_markdown
