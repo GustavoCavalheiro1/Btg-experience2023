@@ -86,18 +86,19 @@ def imprimir_indicadores_e_tabela():
 imprimir_indicadores_e_tabela()
 gerar_grafico_caixa(df_caixa)
 
-## 4. Análise e Conclusões
+## Análise e Conclusões
 
-### Destaques Macroeconômicos
-* [cite_start]O setor de mineração representa **~4% do PIB** [cite: 118] [cite_start]e **~30% das exportações nacionais** (U$80B)[cite: 118].
-* [cite_start]Houve um **crescimento de 6%** no setor no primeiro semestre de 2023[cite: 118].
-* [cite_start]**Riscos & Oportunidades:** Há sinais de recessão Americana e Chinesa [cite: 122][cite_start], e o "imposto do pecado" pode impactar o PIB através do aumento de preços[cite: 119]. [cite_start]A entrada de dólares no Brasil por meio da VALE a beneficia nas receitas[cite: 108].
-* [cite_start]**Sustentabilidade:** A VALE está investindo em tecnologias para neutralizar as emissões de carbono e adota biocombustíveis e máquinas sustentáveis[cite: 120, 110].
+### 1. Destaques Macroeconômicos
+* O setor de mineração representa ~4% do PIB e ~30% das exportações nacionais (U$80B)[cite: 118].
+* **Riscos & Oportunidades:** Há riscos de recessão nos EUA e na China [cite: 122], além do impacto do "imposto do pecado" na extração[cite: 119]. Contudo, a VALE se beneficia de sua alta exposição cambial com a valorização do Dólar em suas receitas[cite: 108].
 
-### Análise Fundamentalista (VALE S.A.)
-* [cite_start]**Caixa e Liquidez:** As maiores despesas são relacionadas aos processos de Brumadinho[cite: 107]. [cite_start]A empresa mantém o Capital de Giro negativo, mas há expectativas de melhoras no fluxo de caixa[cite: 107].
-* [cite_start]**Estratégia e Crescimento:** A empresa busca **diminuir exposição à China**, focando em acordos com o Oriente Médio, Ásia e Europa[cite: 111]. [cite_start]O objetivo é aumentar a receita e entrar em acordos ambientais com países desenvolvidos[cite: 112, 113].
-* [cite_start]**Minério de Ferro:** O preço do minério de ferro está resiliente ao longo de 2023 [cite: 127][cite_start], com alvo de longo prazo em **U$ 85,00**[cite: 108].
+### 2. Análise Fundamentalista (VALE S.A.)
+* **Caixa e Liquidez:** A Geração de Caixa Operacional (GCO) mostra uma recuperação notável, saltando de R$ 50B em 2023 para R$ 104B em 2024 (projeção 9M). O GCO se mostra resiliente apesar do Capital de Giro negativo[cite: 107].
+* **Despesas:** As maiores despesas ainda estão relacionadas aos processos de Brumadinho[cite: 107].
+* **Estratégia e Crescimento:** A empresa está em um movimento estratégico de diminuição da exposição à China, fechando acordos com o Oriente Médio, Ásia e Europa[cite: 111]. Este movimento visa acordos ambientais e aumento de receita[cite: 112].
 
-### Recomendação
+### 3. Fatores ESG e Transição Energética
+* A VALE está investindo em tecnologias para neutralizar emissões de carbono [cite: 120] e adota biocombustíveis e máquinas sustentáveis[cite: 110]. Esta transição contribui para a recuperação do EBITDA [cite: 109], alinhando a empresa com a **Economia Verde**[cite: 124].
+
+## Recomendação
 O preço alvo de **R$ 74,37** é suportado pela resiliência do minério de ferro e pela estratégia de diversificação de clientes. A recuperação do fluxo de caixa e o foco em mercados desenvolvidos justificam uma visão **positiva** de longo prazo.
